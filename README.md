@@ -32,6 +32,10 @@ Ce projet a pour vocation de nous présenter et d'appréhender le côté concept
 > # Initialisation (à exécuter une seule fois)
 > git clone <repo>
 > cd easyupload
+>
+> # Copier le fichier d'environnement (penser à le configurer)
+> cp .env_template .env
+>
 > ./devops/init.sh
 > 
 > # Démarrage du projet (après initialisation)
