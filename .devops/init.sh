@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-if [ ! -d "./var" ]; then
+set -e
+
+docker compose build
+docker compose up -d
+
+docker compose exec composer composer update
+
+docker compose exec apache bash -c 'if [ ! -d "./var" ]; then
   mkdir -p "var/logs"
 fi
 
@@ -11,5 +18,4 @@ fi
 chmod -R o+w "./var"
 
 chmod -R o+w "./uploads"
-
-composer update
+'
