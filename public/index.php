@@ -27,6 +27,14 @@ $request = new Request();
 $router  = new Router();
 
 /**
+ * Middleware Turnstile
+ */
+use App\Services\TurnstileService;
+use App\Middlewares\TurnstileMiddleware;
+
+require_once __DIR__ . '/../src/Routes/TurnstileRoute.php';
+
+/**
  * Routes GET
  */
 $router->get('/', [App\Controllers\HomeController::class, 'index']);
@@ -63,6 +71,10 @@ $router->post('/logout', [
     App\Controllers\AuthController::class,
     'logout',
 ]);
+
+$turnstileService = new TurnstileService();
+$turnstileMiddleware = new TurnstileMiddleware($turnstileService);
+$turnstileMiddleware->handle($request->uri());
 
 /**
  * Dispatch HTTP

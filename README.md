@@ -32,10 +32,10 @@ Ce projet a pour vocation de nous présenter et d'appréhender le côté concept
 > # Initialisation (à exécuter une seule fois)
 > git clone <repo>
 > cd easyupload
-> ./.devops/init.sh
+> ./.devops/docker_init.sh
 > 
 > # Démarrage du projet (après initialisation)
 > docker compose up -d
 > ```
 >
-> votre site est accessible via `http://localhost:8000`
+> Votre site est accessible via `http://localhost:8000`
