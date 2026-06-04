@@ -12,7 +12,7 @@ services:
       - ${PWD}/.:/app:rw,z
 
     ports:
-      - ${PORT}:80
+      - 8000:80
 
     networks:
       - easy_upload

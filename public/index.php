@@ -1,61 +1,70 @@
 <?php
 
-require_once '../vendor/autoload.php';
+declare(strict_types=1);
 
-include_once '../src/dotEnv.php';
-include_once '../src/log.php';
+/**
+ * EasyUpload - Front Controller
+ * public/index.php
+ */
 
-dotEnv(__DIR__ . '/../');
+use App\Core\Request;
+use App\Core\Router;
 
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+/**
+ * Charger variables d'environnement
+ */
+use Dotenv\Dotenv;
 
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
-function renderPage(string $view, string $title = ''): void
-{
-    $title = $title ?: ($_ENV['MAIL_FROM_NAME'] ?? 'Site');
+/**
+ * Initialiser requête et router
+ */
+$request = new Request();
+$router  = new Router();
 
-    require __DIR__ . '/../src/_header.php';
-    require __DIR__ . '/../src/' . $view;
-    require __DIR__ . '/../src/_footer.php';
-}
+/**
+ * Routes GET
+ */
+$router->get('/', [App\Controllers\HomeController::class, 'index']);
 
-function runScript(string $file): void
-{
-    require __DIR__ . '/../src/' . $file;
-}
+$router->get('/download', [
+    App\Controllers\DownloadController::class,
+    'show',
+]);
 
-switch ($uri) {
-    case '/':
-        renderPage("accueil.php");
-        break;
+$router->get('/download/file', [
+    App\Controllers\DownloadController::class,
+    'file',
+]);
 
-    case '/upload':
-        runScript("upload.php");
-        break;
+$router->get('/login', [
+    App\Controllers\AuthController::class,
+    'loginPage',
+]);
 
-    case '/download/getFile':
-        $file = $_GET['file'] ?? null;
-        if (!$file) {
-            http_response_code(400);
-        }
-        runScript("Download.php");
-        break;
+/**
+ * Routes POST
+ */
+$router->post('/upload', [
+    App\Controllers\UploadController::class,
+    'store',
+]);
 
-    case '/download/':
-        $file = $_GET['file'] ?? null;
-        if (!$file) {
-            http_response_code(400);
-        }
-        renderPage("downloadPage.php");
-        break;
+$router->post('/login', [
+    App\Controllers\AuthController::class,
+    'login',
+]);
 
-    case '/login':
-        require __DIR__ . '/../src/pageLogin.html';
-        break;
+$router->post('/logout', [
+    App\Controllers\AuthController::class,
+    'logout',
+]);
 
-    default:
-        http_response_code(404);
-        require __DIR__ . '/404.html';
-        break;
-}
+/**
+ * Dispatch HTTP
+ */
+$router->dispatch($request);

@@ -26,20 +26,9 @@ Ce projet a pour vocation de nous présenter et d'appréhender le côté concept
 
 > Linux / Mac : [install](./documents/linux/install.md)
 
-> Docker :
->
-> ```bash
-> # Initialisation (à exécuter une seule fois)
-> git clone <repo>
-> cd easyupload
->
-> # Copier le fichier d'environnement (penser à le configurer)
-> cp .env_template .env
->
-> ./devops/init.sh
-> 
-> # Démarrage du projet (après initialisation)
-> docker compose up -d
-> ```
->
-> votre site est accessible via `http://localhost:8000`
+## Windows installation avec Docker
+cloner le projet, aller dans le répertoire du projet, lancez le script shell
+./devops/init/sh
+docker compose up
+
+votre site est accessible via http://localhost:8000
