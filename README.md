@@ -25,3 +25,10 @@ Ce projet a pour vocation de nous présenter et d'appréhender le côté concept
 > Windows : [install](./documents/windows/install.md)
 
 > Linux / Mac : [install](./documents/linux/install.md)
+
+## Windows installation avec Docker
+cloner le projet, aller dans le répertoire du projet, lancez le script shell
+./devops/init/sh
+docker compose up
+
+votre site est accessible via http://localhost:8000

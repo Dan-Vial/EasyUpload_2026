@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 
-if [ ! -d "./var" ]; then
-  mkdir -p "var/logs"
+if [ ! -f "./storage/bdd.db" ]; then
+  sqlite3 ./storage/bdd.db <documents/schema.sql
 fi
 
-if [ ! -f "./var/bdd.db" ]; then
-  sqlite3 ./var/bdd.db <documents/schema.sql
-fi
-
-chmod -R o+w "./var"
-
-chmod -R o+w "./uploads"
+chmod -R o+w "./storage"
 
 composer update
