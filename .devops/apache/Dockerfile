@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
   zip \
   unzip \
   sqlite3 \
-  sqlitebrowser \
   && docker-php-ext-install zip \
   && a2enmod rewrite \
   && rm -rf /var/lib/apt/lists/*
