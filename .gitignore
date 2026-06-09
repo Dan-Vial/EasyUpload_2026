@@ -5,5 +5,4 @@ bdd.db
 var/
 .vscode
 .php-cs-fixer.*
-storage/
 *.sqbpro
